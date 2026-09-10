@@ -20,6 +20,10 @@ def test_read_connected_ios_device_raises_clear_error_without_hardware_extra(mon
 
 
 def test_a_device_that_fails_at_connect_time_still_raises_device_not_accessible(monkeypatch):
+    # Needs the real pymobiledevice3 types/modules to monkeypatch against;
+    # CI deliberately doesn't install the `hardware` extra (see ci.yml), so
+    # skip rather than fail there -- this still runs wherever it's installed.
+    pytest.importorskip("pymobiledevice3")
     import pymobiledevice3.lockdown
     import pymobiledevice3.usbmux
     from pymobiledevice3.exceptions import NotPairedError
